@@ -18,6 +18,7 @@ search: true
 The methods below all require identification of a particular Zego customer.
 
 This can be done in one of two ways:
+
 - ``policyId`` (also referred to as “customer number”) is a unique identifier that Zego assigns to each of its customers. 
 
 - ``driverId`` is an identifier assigned by the work provider to uniquely identify its drivers.
@@ -27,12 +28,20 @@ This can be done in one of two ways:
 For the API calls below, either the ``policyId`` or the ``driverId`` parameter can be sent.
 
 # Methods
-
 ## shift/login
 
+> The request body should contain JSON data in the following format:
 
+```
+{
+    "policyId": <POLICY_ID>,
+    "driverId": <DRIVER_ID>,
+    "timestamp": <TIMESTAMP>
+}
+```
 
-> Script (using `driverId`)
+> &gt;&gt;&gt; Script (using `driverId`)
+
 ```python
 import json
 import datetime
@@ -40,195 +49,502 @@ import requests
 from settings import AUTHORIZATION_CODE
 
 response = requests.post(
-    'http://localhost:8000/v1/shift/login/',
-     headers={'Authorization': AUTHORIZATION_CODE},
-     data=json.dumps({
-          'driverId': '1686',
-          'timestamp': datetime.datetime.now().isoformat()
-     })
+    'http://www.zegocover.com/v1/shift/login/',
+    headers={'Authorization': AUTHORIZATION_CODE},
+    data=json.dumps({
+        'driverId': '1686',
+        'timestamp': datetime.datetime.now().isoformat()
+    })
 )
 print('Response status code:', response.status_code)
 print('Response body:', response.text)
 
 ```
-> Output
+> &lt;&lt;&lt; Output
+
 ```python
 Response status code: 202
 Response body: {"status": "PENDING"}
 ```
-> Make sure to replace `1686` with your driver's id.
+> Make sure to replace ``1686`` with your driver's id.
 
-Start an individual user's shift for the given driver and timestamp
 
-# Kittens
+Start an individual user's shift for the given driver and timestamp.
 
-## Get All Kittens
+### Request
 
-```ruby
-require 'kittn'
+Method | URL |
+------ | ----|
+POST | v1/shift/login/
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+
+<table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th colspan="2">Params</th>
+            <th>Values</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>HEAD</td>
+            <td colspan="2">Authorization</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td colspan="2">body</td>
+            <td>JSON (Object)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>policyId</td>
+            <td>String (optional)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>driverId</td>
+            <td>String (optional)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>timestamp</td>
+            <td>String (ISO-8601)</td>
+        </tr>
+    </tbody>
+</table>
+
+Only one of ``policyId`` or ``driverId`` should be provided; see [Introduction](#introduction)
+
+### Response
+
+Status | Response |
+------ | ---------|
+202 | {"status":"PENDING"}
+401 | {"error":"MISSING_AUTH"}
+401 | {"error":"INVALID_KEY"}
+400 | {"error":"INVALID_DATA"}
+
+## shift/logout
+
+> The request body should contain JSON data in the following format:
+
 ```
+{
+    "policyId": <POLICY_ID>,
+    "driverId": <DRIVER_ID>,
+    "timestamp": <TIMESTAMP>
+}
+```
+
+> &gt;&gt;&gt; Script (using `driverId`)
 
 ```python
-import kittn
+import json
+import datetime
+import requests
+from settings import AUTHORIZATION_CODE
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+response = requests.post(
+    'http://www.zegocover.com/v1/shift/logout/',
+    headers={'Authorization': AUTHORIZATION_CODE},
+    data=json.dumps({
+        'driverId': '1686',
+        'timestamp': datetime.datetime.now().isoformat()
+    })
+)
+print('Response status code:', response.status_code)
+print('Response body:', response.text)
+
 ```
+> &lt;&lt;&lt; Output
 
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
 ```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+Response status code: 202
+Response body: {"status": "PENDING"}
 ```
+> Make sure to replace ``1686`` with your driver's id.
 
-> The above command returns JSON structured like this:
 
-```json
+Logs the given driver out at the given timestamp.
+
+
+### Request
+
+Method | URL |
+------ | ----|
+POST | v1/shift/logout/
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th colspan="2">Params</th>
+            <th>Values</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>HEAD</td>
+            <td colspan="2">Authorization</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td colspan="2">body</td>
+            <td>JSON (Object)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>policyId</td>
+            <td>String (optional)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>driverId</td>
+            <td>String (optional)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>timestamp</td>
+            <td>String (ISO-8601)</td>
+        </tr>
+    </tbody>
+</table>
+
+
+Only one of ``policyId`` or ``driverId`` should be provided; see [Introduction](#introduction)
+
+### Response
+
+Status | Response |
+------ | ---------|
+202 | {"status":"PENDING"}
+401 | {"error":"MISSING_AUTH"}
+401 | {"error":"INVALID_KEY"}
+400 | {"error":"INVALID_DATA"}
+
+
+## batch/login
+
+> The post body should contain JSON data in the following format:
+
+```
 [
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
+    {
+        "policyId": <POLICY_ID>,
+        "driverId": <DRIVER_ID>,
+        "timestamp": <TIMESTAMP>
+    },
+    ...
 ]
 ```
 
-This endpoint retrieves all kittens.
 
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
+> &gt;&gt;&gt; Script (using `driverId`)
 
 ```python
-import kittn
+import json
+import datetime
+import requests
+from settings import AUTHORIZATION_CODE
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+now = datetime.datetime.now()
+
+response = requests.post(
+    'http://www.zegocover.com/v1/batch/login/',
+    headers={'Authorization': AUTHORIZATION_CODE},
+    data=json.dumps([
+        {
+            'driverId': '1686',
+            'timestamp': now.isoformat()
+        },
+        {
+            'driverId': '1687',
+            'timestamp': now.isoformat()
+        },
+    ])
+)
+print('Response status code:', response.status_code)
+print('Response body:', response.text)
+
+```
+> &lt;&lt;&lt; Output
+
+```
+Response status code: 202
+Response body: {"status": "PENDING"}
+```
+> Make sure to replace ``1686`` with your driver's id.
+
+
+Supply a list of policyIds or driverIds and timestamps to start shifts for multiple users with one request.
+
+
+### Request
+
+Method | URL |
+------ | ----|
+POST | v1/batch/login/
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th colspan="2">Params</th>
+            <th>Values</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>HEAD</td>
+            <td colspan="2">Authorization</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td colspan="2">body</td>
+            <td>JSON (Array:[Object])</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>policyId</td>
+            <td>String (optional)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>driverId</td>
+            <td>String (optional)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>timestamp</td>
+            <td>String (ISO-8601)</td>
+        </tr>
+    </tbody>
+</table>
+
+
+Only one of ``policyId`` or ``driverId`` should be provided; see [Introduction](#introduction)
+
+### Response
+
+Status | Response |
+------ | ---------|
+202 | {"status":"PENDING"}
+401 | {"error":"MISSING_AUTH"}
+401 | {"error":"INVALID_KEY"}
+400 | {"error":"INVALID_DATA"}
+
+
+## batch/logout
+
+> The post body should contain JSON data in the following format:
+
+```
+[
+    {
+        "policyId": <POLICY_ID>,
+        "driverId": <DRIVER_ID>,
+        "timestamp": <TIMESTAMP>
+    },
+    ...
+]
 ```
 
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
+> &gt;&gt;&gt; Script
 
 ```python
-import kittn
+import json
+import datetime
+import requests
+from settings import AUTHORIZATION_CODE
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
+now = datetime.datetime.now()
+
+response = requests.post(
+    'http://www.zegocover.com/v1/batch/logout/',
+    headers={'Authorization': AUTHORIZATION_CODE},
+    data=json.dumps([
+        {
+            'driverId': '1686',
+            'timestamp': now.isoformat()
+        },
+            {
+            'driverId': '1687',
+            'timestamp': now.isoformat()
+        },
+    ])
+)
+print('Response status code:', response.status_code)
+print('Response body:', response.text)
+
+```
+> &lt;&lt;&lt; Output
+
+```
+Response status code: 202
+Response body: {"status": "PENDING"}
+```
+> Make sure to replace ``1686`` with your driver's id.
+
+
+Supply a list of policyIds or driverIds and timestamps to start shifts for multiple users with one request.
+
+
+### Request
+
+Method | URL |
+------ | ----|
+POST | v1/batch/logout/
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th colspan="2">Params</th>
+            <th>Values</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>HEAD</td>
+            <td colspan="2">Authorization</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td colspan="2">body</td>
+            <td>JSON (Array:[Object])</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>policyId</td>
+            <td>String (optional)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>driverId</td>
+            <td>String (optional)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>timestamp</td>
+            <td>String (ISO-8601)</td>
+        </tr>
+    </tbody>
+</table>
+
+
+Only one of ``policyId`` or ``driverId`` should be provided; see [Introduction](#introduction)
+
+### Response
+
+Status | Response |
+------ | ---------|
+202 | {"status":"PENDING"}
+401 | {"error":"MISSING_AUTH"}
+401 | {"error":"INVALID_KEY"}
+400 | {"error":"INVALID_DATA"}
+
+
+## link-work-provider
+
+
+> Example
+
+```
+/link-work-provider?wp=Courier%20Ltd&wp_id=123456&email=driver@example.com
 ```
 
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
+> &gt;&gt;&gt; Script
+
+```python
+from urllib.parse import urlencode
+
+
+params = urlencode({
+    'wp': 'Courier Ltd',
+    'wp_id': '123456',
+    'email': 'driver@example.com'
+})
+
+driver_url = f'http://www.zegocover.com/link-work-provider?{params}'
+
+print(driver_url)
+
 ```
 
-```javascript
-const kittn = require('kittn');
+> Where ``wp`` is the name of the work provider (as advised by Zego), ``wp_id`` is the unique work provider driver id, and ``email`` is the email address of the driver.
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+> &lt;&lt;&lt; Output
+
 ```
+http://www.zegocover.com/link-work-provider?wp=Courier+Ltd&wp_id=123456&email=driver@example.com
 
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
 ```
+> Make sure to replace ``1686`` with your driver's id.
 
-This endpoint retrieves a specific kitten.
 
-### HTTP Request
+To allow their drivers to to easily sign up to Zego, or link their existing Zego account to a new work provider ``driverId``, drivers can be provided with a URL that will direct them to the Zego website. This URL can be created by a work provider to provide to their drivers. 
 
-`DELETE http://example.com/kittens/<ID>`
+New Zego users will be directed to register and agree terms with their work provider details already provided. Existing users will be directed to authenticate and agree work provider terms to link their details.
 
-### URL Parameters
+### Request
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+Method | URL |
+------ | ----|
+GET | link-work-provider
 
+
+<table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th colspan="2">Params</th>
+            <th>Values</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>GET</td>
+            <td colspan="2">wp</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="2">wp_id</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="2">email</td>
+            <td>String</td>
+        </tr>
+    </tbody>
+</table>
+
+### Response
+
+Status | Response |
+------ | ---------|
+302 | 
+
+
+The site will redirect the user to the correct next step (linking, login, or sign up) depending on their account and session status.
