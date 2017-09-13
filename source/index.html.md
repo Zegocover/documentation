@@ -30,23 +30,21 @@ For the API calls below, either the ``policyId`` or the ``driverId`` parameter c
 # Methods
 ## shift/login
 
-> The request body should contain JSON data in the following format:
+> The request body should contain JSON data in one of the following formats:
 
 ```
-{
-    "policyId": <POLICY_ID>,
-    "driverId": <DRIVER_ID>,
-    "timestamp": <TIMESTAMP>
-}
+{"policyId": <POLICY_ID>, "timestamp": <TIMESTAMP>}
+
+OR
+
+{"policyId": <POLICY_ID>, "timestamp": <TIMESTAMP>}
 ```
 
 > &gt;&gt;&gt; Script (using `driverId`)
 
 ```python
-import json
-import datetime
+[...]
 import requests
-from settings import AUTHORIZATION_CODE
 
 response = requests.post(
     'http://www.zegocover.com/v1/shift/login/',
@@ -66,7 +64,7 @@ print('Response body:', response.text)
 Response status code: 202
 Response body: {"status": "PENDING"}
 ```
-> Make sure to replace ``1686`` with your driver's id.
+> Make sure to replace ``'1686'`` with your driver's id.
 
 
 Start an individual user's shift for the given driver and timestamp.
@@ -118,7 +116,9 @@ POST | v1/shift/login/
     </tbody>
 </table>
 
-Only one of ``policyId`` or ``driverId`` should be provided; see [Introduction](#introduction)
+<aside class="notice">
+Only one of <code>policyId</code> or <code>driverId</code> should be provided; see <a href="#introduction">Introduction</a>
+</aside>
 
 ### Response
 
@@ -131,23 +131,22 @@ Status | Response |
 
 ## shift/logout
 
-> The request body should contain JSON data in the following format:
+> The request body should contain JSON data in one of the following formats:
 
 ```
-{
-    "policyId": <POLICY_ID>,
-    "driverId": <DRIVER_ID>,
-    "timestamp": <TIMESTAMP>
-}
+{"policyId": <POLICY_ID>, "timestamp": <TIMESTAMP>}
+
+OR
+
+{"policyId": <POLICY_ID>, "timestamp": <TIMESTAMP>}
 ```
 
 > &gt;&gt;&gt; Script (using `driverId`)
 
 ```python
-import json
-import datetime
+[...]
 import requests
-from settings import AUTHORIZATION_CODE
+
 
 response = requests.post(
     'http://www.zegocover.com/v1/shift/logout/',
@@ -167,7 +166,7 @@ print('Response body:', response.text)
 Response status code: 202
 Response body: {"status": "PENDING"}
 ```
-> Make sure to replace ``1686`` with your driver's id.
+> Make sure to replace ``'1686'`` with your driver's id.
 
 
 Logs the given driver out at the given timestamp.
@@ -220,8 +219,10 @@ POST | v1/shift/logout/
     </tbody>
 </table>
 
+<aside class="notice">
+Only one of <code>policyId</code> or <code>driverId</code> should be provided; see <a href="#introduction">Introduction</a>
+</aside>
 
-Only one of ``policyId`` or ``driverId`` should be provided; see [Introduction](#introduction)
 
 ### Response
 
@@ -235,27 +236,29 @@ Status | Response |
 
 ## batch/login
 
-> The post body should contain JSON data in the following format:
+> The request body should contain JSON data in the following formats:
 
 ```
 [
-    {
-        "policyId": <POLICY_ID>,
-        "driverId": <DRIVER_ID>,
-        "timestamp": <TIMESTAMP>
-    },
+    {"driverId": <DRIVER_ID>, "timestamp": <TIMESTAMP>},
+    {"driverId": <DRIVER_ID>, "timestamp": <TIMESTAMP>},
+    ...
+]
+
+OR
+
+[
+    {"policyId": <POLICY_ID>, "timestamp": <TIMESTAMP>},
+    {"policyId": <POLICY_ID>, "timestamp": <TIMESTAMP>},
     ...
 ]
 ```
 
-
 > &gt;&gt;&gt; Script (using `driverId`)
 
 ```python
-import json
-import datetime
+[...]
 import requests
-from settings import AUTHORIZATION_CODE
 
 now = datetime.datetime.now()
 
@@ -268,22 +271,26 @@ response = requests.post(
             'timestamp': now.isoformat()
         },
         {
-            'driverId': '1687',
+            'driverId': '8545',
             'timestamp': now.isoformat()
         },
+        # [...]
     ])
 )
 print('Response status code:', response.status_code)
 print('Response body:', response.text)
 
 ```
+
 > &lt;&lt;&lt; Output
+
 
 ```
 Response status code: 202
 Response body: {"status": "PENDING"}
 ```
-> Make sure to replace ``1686`` with your driver's id.
+
+> Make sure to replace ``'1686'`` and ``'8545'`` with your drivers' id.
 
 
 Supply a list of policyIds or driverIds and timestamps to start shifts for multiple users with one request.
@@ -337,7 +344,9 @@ POST | v1/batch/login/
 </table>
 
 
-Only one of ``policyId`` or ``driverId`` should be provided; see [Introduction](#introduction)
+<aside class="notice">
+Only one of <code>policyId</code> or <code>driverId</code> should be provided; see <a href="#introduction">Introduction</a>
+</aside>
 
 ### Response
 
@@ -351,26 +360,28 @@ Status | Response |
 
 ## batch/logout
 
-> The post body should contain JSON data in the following format:
+> The request body should contain JSON data in the following formats:
 
 ```
 [
-    {
-        "policyId": <POLICY_ID>,
-        "driverId": <DRIVER_ID>,
-        "timestamp": <TIMESTAMP>
-    },
+    {"driverId": <DRIVER_ID>, "timestamp": <TIMESTAMP>},
+    {"driverId": <DRIVER_ID>, "timestamp": <TIMESTAMP>},
+    ...
+]
+
+OR
+
+[
+    {"policyId": <POLICY_ID>, "timestamp": <TIMESTAMP>},
+    {"policyId": <POLICY_ID>, "timestamp": <TIMESTAMP>},
     ...
 ]
 ```
 
-> &gt;&gt;&gt; Script
+> &gt;&gt;&gt; Script (using `driverId`)
 
 ```python
-import json
-import datetime
-import requests
-from settings import AUTHORIZATION_CODE
+[...]
 
 now = datetime.datetime.now()
 
@@ -382,10 +393,11 @@ response = requests.post(
             'driverId': '1686',
             'timestamp': now.isoformat()
         },
-            {
-            'driverId': '1687',
+        {
+            'driverId': '8545',
             'timestamp': now.isoformat()
         },
+        # [...]
     ])
 )
 print('Response status code:', response.status_code)
@@ -398,8 +410,8 @@ print('Response body:', response.text)
 Response status code: 202
 Response body: {"status": "PENDING"}
 ```
-> Make sure to replace ``1686`` with your driver's id.
 
+> Make sure to replace ``'1686'`` and ``'8545'`` with your drivers' id.
 
 Supply a list of policyIds or driverIds and timestamps to start shifts for multiple users with one request.
 
@@ -452,7 +464,9 @@ POST | v1/batch/logout/
 </table>
 
 
-Only one of ``policyId`` or ``driverId`` should be provided; see [Introduction](#introduction)
+<aside class="notice">
+Only one of <code>policyId</code> or <code>driverId</code> should be provided; see <a href="#introduction">Introduction</a>
+</aside>
 
 ### Response
 
@@ -495,11 +509,13 @@ print(driver_url)
 
 > &lt;&lt;&lt; Output
 
+
 ```
 http://www.zegocover.com/link-work-provider?wp=Courier+Ltd&wp_id=123456&email=driver@example.com
 
 ```
-> Make sure to replace ``1686`` with your driver's id.
+
+> Make sure to replace ``'1686'`` with your driver's id.
 
 
 To allow their drivers to to easily sign up to Zego, or link their existing Zego account to a new work provider ``driverId``, drivers can be provided with a URL that will direct them to the Zego website. This URL can be created by a work provider to provide to their drivers. 

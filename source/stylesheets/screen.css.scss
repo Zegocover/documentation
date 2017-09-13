@@ -92,6 +92,21 @@ html, body {
       border-radius: 0; /* ios has a default border radius */
     }
 
+    input::-webkit-input-placeholder { /* Chrome */
+      color: #FFFFFF;
+    }
+    input:-ms-input-placeholder { /* IE 10+ */
+      color: #FFFFFF;
+    }
+    input::-moz-placeholder { /* Firefox 19+ */
+      color: #FFFFFF;
+      opacity: 1;
+    }
+    input:-moz-placeholder { /* Firefox 4 - 18 */
+      color: #FFFFFF;
+      opacity: 1;
+    }
+
     &:before {
       position: absolute;
       top: 17px;
@@ -126,7 +141,8 @@ html, body {
     }
 
     a {
-      color: $nav-text;
+      color: $nav-subitem-text;
+      font-weight: bold;
       text-decoration: none;
 
       &:hover {
@@ -148,6 +164,7 @@ html, body {
 
   li {
     color: $nav-text;
+    font-weight: bold;
     transition-property: background;
     transition-timing-function: linear;
     transition-duration: 200ms;
@@ -173,6 +190,7 @@ html, body {
 
   .toc-h2 {
     padding-left: $nav-padding + $nav-indent;
+    color: $nav-subitem-text;
     font-size: 12px;
   }
 
@@ -499,8 +517,8 @@ html, body {
     padding: 2px;
     margin: -2px;
     border-radius: 4px;
-    border: 1px solid #F7E633;
-    background: linear-gradient(to top left, #F7E633 0%, #F1D32F 100%);
+    border: 1px solid $zego-green;
+    background: $zego-green;
   }
 }
 
