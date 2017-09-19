@@ -33,7 +33,7 @@ For the API calls below, either the ``policyId`` or the ``driverId`` parameter c
 > The request body should contain JSON data in one of the following formats:
 
 ```
-{"policyId": <POLICY_ID>, "timestamp": <TIMESTAMP>}
+{"driverId": <DRIVER_ID>, "timestamp": <TIMESTAMP>},
 
 OR
 
@@ -134,7 +134,7 @@ Status | Response |
 > The request body should contain JSON data in one of the following formats:
 
 ```
-{"policyId": <POLICY_ID>, "timestamp": <TIMESTAMP>}
+{"driverId": <DRIVER_ID>, "timestamp": <TIMESTAMP>}
 
 OR
 
