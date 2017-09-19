@@ -47,7 +47,7 @@ OR
 import requests
 
 response = requests.post(
-    'http://www.zegocover.com/v1/shift/login/',
+    'https://api.zegocover.com/v1/shift/login/',
     headers={'Authorization': AUTHORIZATION_CODE},
     data=json.dumps({
         'driverId': '1686',
@@ -149,7 +149,7 @@ import requests
 
 
 response = requests.post(
-    'http://www.zegocover.com/v1/shift/logout/',
+    'https://api.zegocover.com/v1/shift/logout/',
     headers={'Authorization': AUTHORIZATION_CODE},
     data=json.dumps({
         'driverId': '1686',
@@ -263,7 +263,7 @@ import requests
 now = datetime.datetime.now()
 
 response = requests.post(
-    'http://www.zegocover.com/v1/batch/login/',
+    'https://api.zegocover.com/v1/batch/login/',
     headers={'Authorization': AUTHORIZATION_CODE},
     data=json.dumps([
         {
@@ -386,7 +386,7 @@ OR
 now = datetime.datetime.now()
 
 response = requests.post(
-    'http://www.zegocover.com/v1/batch/logout/',
+    'https://api.zegocover.com/v1/batch/logout/',
     headers={'Authorization': AUTHORIZATION_CODE},
     data=json.dumps([
         {
@@ -499,7 +499,7 @@ params = urlencode({
     'email': 'driver@example.com'
 })
 
-driver_url = f'http://www.zegocover.com/link-work-provider?{params}'
+driver_url = f'https://api.zegocover.com/link-work-provider?{params}'
 
 print(driver_url)
 
@@ -511,7 +511,7 @@ print(driver_url)
 
 
 ```
-http://www.zegocover.com/link-work-provider?wp=Courier+Ltd&wp_id=123456&email=driver@example.com
+https://api.zegocover.com/link-work-provider?wp=Courier+Ltd&wp_id=123456&email=driver@example.com
 
 ```
 
