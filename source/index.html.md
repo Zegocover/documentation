@@ -19,7 +19,7 @@ The methods below all require identification of a particular Zego customer.
 
 This can be done in one of two ways:
 
-- ``policyId`` (also referred to as “customer number”) is a unique identifier that Zego assigns to each of its customers. 
+- ``policyId`` (also referred to as “customer number”) is a unique identifier that Zego assigns to each of its customers.
 
 - ``driverId`` is an identifier assigned by the work provider to uniquely identify its drivers.
 
@@ -478,6 +478,52 @@ Status | Response |
 400 | {"error":"INVALID_DATA"}
 
 
+## Validate Customer Number
+
+```python
+[...]
+import requests
+
+customer_number = "ABC12"
+
+response = requests.get(
+    'https://api.zegocover.com/v1/validate/customer-number/{}'.format(customer_number),
+    headers={'Authorization': AUTHORIZATION_CODE},
+)
+
+print('Response status code: ', response.status_code)
+
+```
+
+> &lt;&lt;&lt; Output
+
+
+```
+Response status code: 204
+```
+
+
+Validate a Zego policy ID exists (additionally validate that it matches a given email address).
+
+### Request
+
+Method | URL |
+------ | ----|
+GET | v1/validate/customer-number/<A-Z0-9: policyId>
+GET | v1/validate/customer-number/<A-Z0-9: policyId>?email=<str: emailAddress>
+
+
+### Response
+
+Status | Response |
+------ | ---------|
+204 |
+401 | {"error":"MISSING_AUTH"}
+401 | {"error":"INVALID_KEY"}
+404 | {"error":"INVALID_CUSTOMER"}
+404 | {"error":"INVALID_CUSTOMER_EMAIL"}
+
+
 ## link-work-provider
 
 
@@ -518,7 +564,7 @@ https://api.zegocover.com/link-work-provider?wp=Courier+Ltd&wp_id=123456&email=d
 > Make sure to replace ``'1686'`` with your driver's id.
 
 
-To allow their drivers to to easily sign up to Zego, or link their existing Zego account to a new work provider ``driverId``, drivers can be provided with a URL that will direct them to the Zego website. This URL can be created by a work provider to provide to their drivers. 
+To allow their drivers to to easily sign up to Zego, or link their existing Zego account to a new work provider ``driverId``, drivers can be provided with a URL that will direct them to the Zego website. This URL can be created by a work provider to provide to their drivers.
 
 New Zego users will be directed to register and agree terms with their work provider details already provided. Existing users will be directed to authenticate and agree work provider terms to link their details.
 
@@ -560,7 +606,7 @@ GET | link-work-provider
 
 Status | Response |
 ------ | ---------|
-302 | 
+302 |
 
 
 The site will redirect the user to the correct next step (linking, login, or sign up) depending on their account and session status.
