@@ -478,9 +478,12 @@ Status | Response |
 400 | {"error":"INVALID_DATA"}
 
 
-## Validate Customer Number
+## validate/customer-number
+
+> &gt;&gt;&gt; Script
 
 ```python
+
 [...]
 import requests
 
@@ -509,8 +512,8 @@ Validate a Zego policy ID exists (additionally validate that it matches a given 
 
 Method | URL |
 ------ | ----|
-GET | v1/validate/customer-number/<A-Z0-9: policyId>
-GET | v1/validate/customer-number/<A-Z0-9: policyId>?email=<str: emailAddress>
+GET | v1/validate/customer-number/&lt;A-Z0-9: policyId&gt;
+GET | v1/validate/customer-number/&lt;A-Z0-9: policyId&gt;?email=&lt;str: emailAddress&gt;
 
 
 ### Response
