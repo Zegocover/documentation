@@ -7,3 +7,4 @@ Version | Date | Author | Description
 1.2 | 22-Jun-2017 | Tony Bajan |  Document driver id. Added ``link-work-provider``
 1.3 | 12-Sept-2017 | Luis Visintini | Adaptation to Slate
 1.4 | 27-Sept-2017 | Stuart Kelly | Added ``validate/customer-number``
+1.5 | 19-Oct-2017 | Luis Visintini | Fixed mistakes in examples that did not include timezone data
