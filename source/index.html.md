@@ -45,13 +45,14 @@ OR
 ```python
 [...]
 import requests
+from pytz import UTC
 
 response = requests.post(
     'https://api.zegocover.com/v1/shift/login/',
     headers={'Authorization': AUTHORIZATION_CODE},
     data=json.dumps({
         'driverId': '1686',
-        'timestamp': datetime.datetime.now().isoformat()
+        'timestamp': UTC.localize(datetime.datetime.now()).isoformat()
     })
 )
 print('Response status code:', response.status_code)
@@ -111,7 +112,7 @@ POST | v1/shift/login/
             <td></td>
             <td></td>
             <td>timestamp</td>
-            <td>String (ISO-8601)</td>
+            <td>String (ISO-8601 with timezone)</td>
         </tr>
     </tbody>
 </table>
@@ -146,14 +147,14 @@ OR
 ```python
 [...]
 import requests
-
+from pytz import UTC
 
 response = requests.post(
     'https://api.zegocover.com/v1/shift/logout/',
     headers={'Authorization': AUTHORIZATION_CODE},
     data=json.dumps({
         'driverId': '1686',
-        'timestamp': datetime.datetime.now().isoformat()
+        'timestamp': UTC.localize(datetime.datetime.now()).isoformat()
     })
 )
 print('Response status code:', response.status_code)
@@ -214,7 +215,7 @@ POST | v1/shift/logout/
             <td></td>
             <td></td>
             <td>timestamp</td>
-            <td>String (ISO-8601)</td>
+            <td>String (ISO-8601 with timezone)</td>
         </tr>
     </tbody>
 </table>
@@ -259,8 +260,9 @@ OR
 ```python
 [...]
 import requests
+from pytz import UTC
 
-now = datetime.datetime.now()
+now = UTC.localize(datetime.datetime.now())
 
 response = requests.post(
     'https://api.zegocover.com/v1/batch/login/',
@@ -338,7 +340,7 @@ POST | v1/batch/login/
             <td></td>
             <td></td>
             <td>timestamp</td>
-            <td>String (ISO-8601)</td>
+            <td>String (ISO-8601 with timezone)</td>
         </tr>
     </tbody>
 </table>
@@ -382,8 +384,10 @@ OR
 
 ```python
 [...]
+import requests
+from pytz import UTC
 
-now = datetime.datetime.now()
+now = UTC.localize(datetime.datetime.now())
 
 response = requests.post(
     'https://api.zegocover.com/v1/batch/logout/',
@@ -458,7 +462,7 @@ POST | v1/batch/logout/
             <td></td>
             <td></td>
             <td>timestamp</td>
-            <td>String (ISO-8601)</td>
+            <td>String (ISO-8601 with timezone)</td>
         </tr>
     </tbody>
 </table>
