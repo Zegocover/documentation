@@ -384,8 +384,10 @@ OR
 
 ```python
 [...]
+import requests
+from pytz import UTC
 
-now = datetime.datetime.now()
+now = UTC.localize(datetime.datetime.now())
 
 response = requests.post(
     'https://api.zegocover.com/v1/batch/logout/',
