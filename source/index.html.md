@@ -482,6 +482,77 @@ Status | Response |
 400 | {"error":"INVALID_DATA"}
 
 
+## match
+
+> The request body should contain JSON data the following formats:
+
+```
+{"policyId": <POLICY_ID>, "success": true}
+
+```
+
+Supply a Policy ID to confirm that it has been matched to a user and you are ready to start sending shift data, or report that no match was possible and additional reconciliation will be required.
+
+When `success` is true, we will record that the given user has been matched by the authenticated work provider and that they are ready to start sending shifts.
+
+
+### Request
+
+Method | URL |
+------ | ----|
+POST | v1/match/
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th colspan="2">Params</th>
+            <th>Values</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>HEAD</td>
+            <td colspan="2">Authorization</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td colspan="2">body</td>
+            <td>JSON (Object)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>policyId</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>success</td>
+            <td>Boolean</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<aside class="notice">
+This API only accepts a Zego <code>policyId</code>.
+</aside>
+
+### Response
+
+Status | Response |
+------ | ---------|
+202 | {"status":"PENDING"}
+401 | {"error":"MISSING_AUTH"}
+401 | {"error":"INVALID_KEY"}
+400 | {"error":"INVALID_DATA"}
+
+
+
 ## validate/customer-number
 
 > &gt;&gt;&gt; Script

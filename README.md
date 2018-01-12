@@ -49,7 +49,7 @@ vim source/index.html.md
 # Deploy
 bundle exec middleman build --clean
 eval $(zego-aws-login zego-production developer)
-aws s3 sync ./build s3://developer.zegocover.com
+aws s3 sync ./build s3://developer.zego.com
 
 
 ```
