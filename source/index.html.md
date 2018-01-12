@@ -484,10 +484,10 @@ Status | Response |
 
 ## match
 
-> The request body should contain JSON data the following formats:
+> The request body should contain JSON data in the following formats:
 
 ```
-{"policyId": <POLICY_ID>, "success": true}
+{"policyId": <POLICY_ID>, "success": <SUCCESS>}
 
 ```
 
