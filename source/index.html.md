@@ -553,7 +553,7 @@ Status | Response |
 
 
 
-## status
+## user/status
 
 > &gt;&gt;&gt; Script
 
@@ -564,7 +564,7 @@ import requests
 driver_id = "12345"
 
 response = requests.get(
-    f'https://api.zego.com/v1/status/?driverId={driver_id}',
+    f'https://api.zego.com/v1/user/status/?driverId={driver_id}',
     headers={'Authorization': AUTHORIZATION_CODE},
 )
 
