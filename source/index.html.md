@@ -5,7 +5,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - python
 
 toc_footers:
-  - <a href='https://www.zegocover.com'>www.zegocover.com</a>
+  - <a href='https://www.zego.com'>www.zego.com</a>
 
 includes:
   - versions
@@ -48,7 +48,7 @@ import requests
 from pytz import UTC
 
 response = requests.post(
-    'https://api.zegocover.com/v1/shift/login/',
+    'https://api.zego.com/v1/shift/login/',
     headers={'Authorization': AUTHORIZATION_CODE},
     data=json.dumps({
         'driverId': '1686',
@@ -150,7 +150,7 @@ import requests
 from pytz import UTC
 
 response = requests.post(
-    'https://api.zegocover.com/v1/shift/logout/',
+    'https://api.zego.com/v1/shift/logout/',
     headers={'Authorization': AUTHORIZATION_CODE},
     data=json.dumps({
         'driverId': '1686',
@@ -265,7 +265,7 @@ from pytz import UTC
 now = UTC.localize(datetime.datetime.now())
 
 response = requests.post(
-    'https://api.zegocover.com/v1/batch/login/',
+    'https://api.zego.com/v1/batch/login/',
     headers={'Authorization': AUTHORIZATION_CODE},
     data=json.dumps([
         {
@@ -390,7 +390,7 @@ from pytz import UTC
 now = UTC.localize(datetime.datetime.now())
 
 response = requests.post(
-    'https://api.zegocover.com/v1/batch/logout/',
+    'https://api.zego.com/v1/batch/logout/',
     headers={'Authorization': AUTHORIZATION_CODE},
     data=json.dumps([
         {
@@ -553,6 +553,67 @@ Status | Response |
 
 
 
+## user/status
+
+> &gt;&gt;&gt; Script
+
+```python
+[...]
+import requests
+
+driver_id = "12345"
+
+response = requests.get(
+    f'https://api.zego.com/v1/user/status/?driverId={driver_id}',
+    headers={'Authorization': AUTHORIZATION_CODE},
+)
+
+print(json.loads(response.content))
+
+```
+
+> &lt;&lt;&lt; Output
+
+
+```python
+{
+  "status": "ENABLED",
+  "policyId": "ABC123",
+  "cover_class_of_use": "Carriage of Goods for Hire & Reward",
+  "cover_level": "Third Party (TPO)",
+  "vehicle_registration": "VY7 JC3"
+}
+```
+
+Supply a Policy ID or Driver ID and receive status information about that particular driver. If a user hasn't consented to sharing their information with the requester then the same error message will be received as when the driver is not found.
+
+
+### Request
+
+Method | URL |
+------ | ----|
+GET | v1/status/?policyId=<A-Z0-9: policyId>
+GET | v1/status/?driverId=<str: driverId>
+
+
+### Response
+
+Status | Response |
+------ | ---------|
+200 | {"status":"DISABLED", "policyId": <str: policyId>}
+200 | {"status":"ENABLED", "policyId": <str>, "cover_class_of_use": <str>, "cover_level": <str>}
+200 | {"status":"ENABLED", "policyId": <str>, "cover_class_of_use": <str>, "cover_level": <str>, "vehicle_registration": <str>}
+400 | {"error":"INVALID_DATA"}
+401 | {"error":"MISSING_AUTH"}
+401 | {"error":"INVALID_KEY"}
+404 | {"error":"INVALID_CUSTOMER"}
+
+<aside class="notice">
+  <code>vehicle_registration</code> will only be returned if the users policy is specific to a vehicle.
+</aside>
+
+
+
 ## validate/customer-number
 
 > &gt;&gt;&gt; Script
@@ -565,7 +626,7 @@ import requests
 customer_number = "ABC12"
 
 response = requests.get(
-    'https://api.zegocover.com/v1/validate/customer-number/{}'.format(customer_number),
+    'https://api.zego.com/v1/validate/customer-number/{}'.format(customer_number),
     headers={'Authorization': AUTHORIZATION_CODE},
 )
 
@@ -623,7 +684,7 @@ params = urlencode({
     'email': 'driver@example.com'
 })
 
-driver_url = f'https://api.zegocover.com/link-work-provider?{params}'
+driver_url = f'https://api.zego.com/link-work-provider?{params}'
 
 print(driver_url)
 
@@ -635,7 +696,7 @@ print(driver_url)
 
 
 ```
-https://api.zegocover.com/link-work-provider?wp=Courier+Ltd&wp_id=123456&email=driver@example.com
+https://api.zego.com/link-work-provider?wp=Courier+Ltd&wp_id=123456&email=driver@example.com
 
 ```
 
