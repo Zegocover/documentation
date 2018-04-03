@@ -52,7 +52,7 @@ response = requests.post(
     headers={'Authorization': AUTHORIZATION_CODE},
     data=json.dumps({
         'driverId': '1686',
-        'timestamp': UTC.localize(datetime.datetime.now()).isoformat()
+        'timestamp': UTC.localize(datetime.datetime.utcnow()).isoformat()
     })
 )
 print('Response status code:', response.status_code)
@@ -120,6 +120,10 @@ POST | v1/shift/login/
 <aside class="notice">
 Only one of <code>policyId</code> or <code>driverId</code> should be provided; see <a href="#introduction">Introduction</a>
 </aside>
+<aside class="notice">
+Make sure your server's clock and timezone is appropriately configured in order to produce the timestamps you want.
+This should help prevent problems associated with time changes and daylight saving times.
+</aside>
 
 ### Response
 
@@ -154,7 +158,7 @@ response = requests.post(
     headers={'Authorization': AUTHORIZATION_CODE},
     data=json.dumps({
         'driverId': '1686',
-        'timestamp': UTC.localize(datetime.datetime.now()).isoformat()
+        'timestamp': UTC.localize(datetime.datetime.utcnow()).isoformat()
     })
 )
 print('Response status code:', response.status_code)
@@ -223,6 +227,10 @@ POST | v1/shift/logout/
 <aside class="notice">
 Only one of <code>policyId</code> or <code>driverId</code> should be provided; see <a href="#introduction">Introduction</a>
 </aside>
+<aside class="notice">
+Make sure your server's clock and timezone is appropriately configured in order to produce the timestamps you want.
+This should help prevent problems associated with time changes and daylight saving times.
+</aside>
 
 
 ### Response
@@ -262,7 +270,7 @@ OR
 import requests
 from pytz import UTC
 
-now = UTC.localize(datetime.datetime.now())
+now = UTC.localize(datetime.datetime.utcnow())
 
 response = requests.post(
     'https://api.zego.com/v1/batch/login/',
@@ -349,6 +357,10 @@ POST | v1/batch/login/
 <aside class="notice">
 Only one of <code>policyId</code> or <code>driverId</code> should be provided; see <a href="#introduction">Introduction</a>
 </aside>
+<aside class="notice">
+Make sure your server's clock and timezone is appropriately configured in order to produce the timestamps you want.
+This should help prevent problems associated with time changes and daylight saving times.
+</aside>
 
 ### Response
 
@@ -387,7 +399,7 @@ OR
 import requests
 from pytz import UTC
 
-now = UTC.localize(datetime.datetime.now())
+now = UTC.localize(datetime.datetime.utcnow())
 
 response = requests.post(
     'https://api.zego.com/v1/batch/logout/',
@@ -462,7 +474,7 @@ POST | v1/batch/logout/
             <td></td>
             <td></td>
             <td>timestamp</td>
-            <td>String (ISO-8601 with timezone)</td>
+            <td>String (ISO-8601 with timezone).</td>
         </tr>
     </tbody>
 </table>
@@ -470,6 +482,10 @@ POST | v1/batch/logout/
 
 <aside class="notice">
 Only one of <code>policyId</code> or <code>driverId</code> should be provided; see <a href="#introduction">Introduction</a>
+</aside>
+<aside class="notice">
+Make sure your server's clock and timezone is appropriately configured in order to produce the timestamps you want.
+This should help prevent problems associated with time changes and daylight saving times.
 </aside>
 
 ### Response
