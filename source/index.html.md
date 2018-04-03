@@ -122,7 +122,7 @@ Only one of <code>policyId</code> or <code>driverId</code> should be provided; s
 </aside>
 <aside class="notice">
 Make sure your server's clock and timezone is appropriately configured in order to produce the timestamps you want.
-This should help prevent problems associated with time changes and dayligh saving times.
+This should help prevent problems associated with time changes and daylight saving times.
 </aside>
 
 ### Response
@@ -229,7 +229,7 @@ Only one of <code>policyId</code> or <code>driverId</code> should be provided; s
 </aside>
 <aside class="notice">
 Make sure your server's clock and timezone is appropriately configured in order to produce the timestamps you want.
-This should help prevent problems associated with time changes and dayligh saving times.
+This should help prevent problems associated with time changes and daylight saving times.
 </aside>
 
 
@@ -359,7 +359,7 @@ Only one of <code>policyId</code> or <code>driverId</code> should be provided; s
 </aside>
 <aside class="notice">
 Make sure your server's clock and timezone is appropriately configured in order to produce the timestamps you want.
-This should help prevent problems associated with time changes and dayligh saving times.
+This should help prevent problems associated with time changes and daylight saving times.
 </aside>
 
 ### Response
@@ -474,7 +474,7 @@ POST | v1/batch/logout/
             <td></td>
             <td></td>
             <td>timestamp</td>
-            <td>String (ISO-8601 with timezone)</td>
+            <td>String (ISO-8601 with timezone).</td>
         </tr>
     </tbody>
 </table>
@@ -485,7 +485,7 @@ Only one of <code>policyId</code> or <code>driverId</code> should be provided; s
 </aside>
 <aside class="notice">
 Make sure your server's clock and timezone is appropriately configured in order to produce the timestamps you want.
-This should help prevent problems associated with time changes and dayligh saving times.
+This should help prevent problems associated with time changes and daylight saving times.
 </aside>
 
 ### Response
