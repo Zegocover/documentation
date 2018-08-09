@@ -53,3 +53,12 @@ aws s3 sync ./build s3://developer.zego.com
 
 
 ```
+
+## Alternative setup using Docker
+
+This requires Docker as a system dependency
+
+```
+make build
+make run
+```
