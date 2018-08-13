@@ -11,3 +11,4 @@ Version | Date | Author | Description
 1.6 | 12-Jan-2018 | Tony Bajan | Added ``/match``
 1.7 | 05-Feb-2018 | Stuart Kelly | Added ``/user/status``
 1.8 | 03-April-2018 | Luis Visintini | Added timezone clarifications related to timestamps required for some methods
+1.9 | 13-Aug-2018 | Cedric Cordenier | Deprecate ``policyId`` and ``driverId`` fields. These are replaced by ``customerNumber`` and ``workProviderUserId`` respectively.
