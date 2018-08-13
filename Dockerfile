@@ -12,4 +12,4 @@ COPY . /docs
 RUN gem install bundler && \
     bundle install
 
-ENTRYPOINT bundle exec middleman server
+CMD ["bundle", "exec", "middleman", "server"]
