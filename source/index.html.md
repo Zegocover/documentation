@@ -747,7 +747,7 @@ Status | Response |
 > Example
 
 ```
-/link-work-provider?work_provider=Courier%20Ltd&work_provider_id=123456&email=driver@example.com
+v1/link-work-provider?work_provider=Courier%20Ltd&work_provider_user_id=123456&email=driver@example.com
 ```
 
 > &gt;&gt;&gt; Script
@@ -762,19 +762,19 @@ params = urlencode({
     'email': 'driver@example.com'
 })
 
-driver_url = f'https://api.zego.com/link-work-provider?{params}'
+driver_url = f'https://api.zego.com/v1/link-work-provider?{params}'
 
 print(driver_url)
 
 ```
 
-> Where ``work_provider`` is the name of the work provider (as advised by Zego), ``work_provider_id`` is the unique work provider driver id, and ``email`` is the email address of the driver.
+> Where ``work_provider`` is the name of the work provider (as advised by Zego), ``work_provider_user_id`` is the unique work provider driver id, and ``email`` is the email address of the driver.
 
 > &lt;&lt;&lt; Output
 
 
 ```
-https://api.zego.com/link-work-provider?work_provider=Courier+Ltd&work_provider_id=123456&email=driver@example.com
+https://api.zego.com/v1/link-work-provider?work_provider=Courier+Ltd&work_user_provider_id=123456&email=driver@example.com
 
 ```
 
@@ -789,7 +789,7 @@ New Zego users will be directed to register and agree terms with their work prov
 
 Method | URL |
 ------ | ----|
-GET | link-work-provider
+GET | v1/link-work-provider
 
 
 <table>
@@ -808,7 +808,7 @@ GET | link-work-provider
         </tr>
         <tr>
             <td></td>
-            <td colspan="2">work_provider_id</td>
+            <td colspan="2">work_provider_user_id</td>
             <td>String</td>
         </tr>
         <tr>
