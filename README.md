@@ -59,6 +59,6 @@ aws s3 sync ./build s3://developer.zego.com
 This requires Docker as a system dependency
 
 ```
-make build
+make build-image 
 make run
 ```
