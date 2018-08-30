@@ -4,8 +4,8 @@ build-image:
 	docker build -t zego-documentation:latest .
 
 build:
-	docker run --mount type=bind,source=$(ROOT_DIR)/build,target=/docs/build -it zego-documentation bundle exec middleman build --clean
+	docker run --mount type=bind,source=$(ROOT_DIR)/,target=/docs/ -it zego-documentation bundle exec middleman build --clean --verbose
 run:
-	docker run --mount type=bind,source=$(ROOT_DIR)/source,target=/docs/source -it -p 4567:4567 zego-documentation
+	docker run --mount type=bind,source=$(ROOT_DIR)/,target=/docs/ -it -p 4567:4567 zego-documentation
 
 .PHONY: build-image build run
