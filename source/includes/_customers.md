@@ -33,7 +33,7 @@ print(json.loads(response.content))
 }
 ```
 
-Supply a customer number or work provider user id and receive status information about that particular driver. If a user hasn't consented to sharing their information with the requester then the same error message will be received as when the driver is not found.
+Supply a customer number or work provider user id and receive status information about that particular user. If a user hasn't consented to sharing their information with the requester then the same error message will be received as when the user is not found.
 
 
 ### Request
