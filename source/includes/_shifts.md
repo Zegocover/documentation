@@ -42,7 +42,7 @@ print('Response body:', response.text)
 Response status code: 202
 Response body: {"status": "PENDING"}
 ```
-> Make sure to replace ``'1686'`` with your driver's id.
+> Make sure to replace ``'1686'`` with your user's id.
 
 
 Start an individual Customers's shift for the given CustomerNumber or WorkProviderUserId and timestamp.

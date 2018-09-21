@@ -44,7 +44,7 @@ Some of the API methods require identification of a particular Zego customer.
 This can be done in one of two ways:
 
 - ``customerNumber`` is a unique identifier that Zego assigns to each of its customers.
-- ``workProviderUserId`` is an identifier assigned by the work provider to uniquely identify its drivers.
+- ``workProviderUserId`` is an identifier assigned by the work provider to uniquely identify its users.
 
 Zego can obtain this identifier during customer signup, and use it to identify that customer during communication with the applicable work provider.
     
