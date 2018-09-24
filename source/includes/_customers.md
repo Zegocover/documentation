@@ -19,21 +19,34 @@ print(json.loads(response.content))
 
 ```
 
-> &lt;&lt;&lt; Output
+> &lt;&lt;&lt; Customer / User has a valid product output
 
 
 ```python
 {
   "status": "ENABLED",
+  "detail": "Valid integrated insurance product found",
   "policyId": "ABC123",  # maintained for backwards compatibility
-  "customer_number": "ABC123",
+  "customerNumber": "ABC123",
   "cover_class_of_use": "Carriage of Goods for Hire & Reward",
   "cover_level": "Third Party (TPO)",
   "vehicle_registration": "VY7 JC3"
 }
 ```
 
-Supply a customer number or work provider user id and receive status information about that particular user. If a user hasn't consented to sharing their information with the requester then the same error message will be received as when the user is not found.
+> &lt;&lt;&lt; Customer / User does not have a product linked
+
+```python
+{
+  "status": "DISABLED",
+  "detail": "No integrated insurance product linked to <WORK_PROVIDER_NAME>",
+  "policyId": "ABC123",  # maintained for backwards compatibility
+  "customerNumber": "ABC123",
+}
+```
+
+
+Supply a `customerNumber` **OR** `workProviderUserId` and receive status information about that particular Customer/User. If a Customer/User hasn't consented to sharing their information with the requester then the same error message will be received as when the Customer/User is not found.
 
 
 ### Request
@@ -50,16 +63,16 @@ GET | v1/status/?workProviderUserId=<str: workProviderUserId>
 
 Status | Response |
 ------ | ---------|
-200 | {"status":"DISABLED", "policyId": <str: policyId>, "customer_number": <str: customer_number>}
-200 | {"status":"ENABLED", "policyId": <str>, "customer_number": <str>, cover_class_of_use": <str>, "cover_level": <str>}
-200 | {"status":"ENABLED", "policyId": <str>, "customer_number": <str>, cover_class_of_use": <str>, "cover_level": <str>, "vehicle_registration": <str>}
+200 | {"status":"DISABLED", "policyId": <str: policyId>, "customerNumber": <str: customerNumber>, "detail": <str>}
+200 | {"status":"ENABLED", "policyId": <str>, "customerNumber": <str>, "cover_class_of_use": <str>, "cover_level": <str>,  "detail": <str>}
+200 | {"status":"ENABLED", "policyId": <str>, "customerNumber": <str>, "cover_class_of_use": <str>, "cover_level": <str>,  "detail": <str>, "vehicle_registration": <str>}
 400 | {"error":"INVALID_DATA"}
 401 | {"error":"MISSING_AUTH"}
 401 | {"error":"INVALID_KEY"}
 404 | {"error":"INVALID_CUSTOMER"}
 
 <aside class="notice">
-  <code>vehicle_registration</code> will only be returned if the users policy is specific to a vehicle.
+  <code>vehicle_registration</code> will only be returned if the Customer/User policy covers a vehicle.
 </aside>
 
 
@@ -111,27 +124,26 @@ Status | Response |
 404 | {"error":"INVALID_CUSTOMER"}
 404 | {"error":"INVALID_CUSTOMER_EMAIL"}
 
-Create customers on the Zego platform and perform actions on those Customers
+Create and Enrol a customer on a Public Liability product
 
-## customer/enrol
+## customer/enrol/public-liability/
 
 > The request body should contain JSON data in the following format
 
 ```json
 {
-    "customer": {
-        "givenNames": "Reakwon The",
-        "lastName": "Chef",
-        "address": "25 Luke Street",
-        "city": "London",
-        "postCode": "EC2A 4DS",
-        "dob": "1984-01-15",
-        "email": "raekwon@wutangforever.wu",
-        "phoneNumber": "+44012314323423",
-        "workProviderUserId": "596e34ee2346c78cc8cf7c4"},
+"customer": {
+    "address": "25 Luke Street",
+    "city": "London",
+    "dob": "2000-04-15",
+    "email": "raekwon@wutangforever.wu",
+    "givenNames": "Reakwon The",
+    "lastName": "Chef",
+    "phoneNumber": "+4412314323423",
+    "postCode": "EC2A 4DS",
+    "workProviderUserId": "596e34ee2346c78cc8cf7c4"},
     "product": {
-        "code": "FL.OCC.PL.UK.001",
-        "occupations": ["babysitter"]}
+      "occupations": ["childminders"]}
 }
 ```
 
@@ -141,7 +153,7 @@ Create customers on the Zego platform and perform actions on those Customers
 import requests
 
 response = requests.post(
-    'https://api.zego.com/v1/customer/enrol/',
+    'https://api.zego.com/v1/customer/enrol/public-liability/',
     headers={'Authorization': AUTHORIZATION_CODE},
     json={
         'customer': {...},
@@ -155,19 +167,18 @@ print(response.json())
 
 > &lt;&lt;&lt; Response
 
-```python
+```json
 > "Response status code: 200"
 
-> {
-    'customerNumber': 'SE33S',
-    'occupations': ['childminder'],
-    'workProviderUserId': '212312qd2131',  # Your internal ID for easier matching
-    'status': 'Created',
-    'coverLevel': 'Public Liability'
+{
+    "customerNumber": "SE33S",
+    "message": "Customer has been enrolled on <PUBLIC_LIABILITY_PRODUCT_NAME",
+    "workProviderUserId": "212312qd2131",  # Your internal ID for easier matching
+    "status": "ENROLLED",
 }
 ```
 
-Creates a new Customer on the Zego platform and enrols them onto a product. 
+Creates a new Customer on the Zego platform and enrols them onto a public liability product. 
 
 <aside class="notice">
 In order for a Customer to be successfully created and enrolled on an insurance Product, 
@@ -175,13 +186,12 @@ the Product must support API enrolment and the developer account must have permi
 for API Customer creation. Please contact your Zego Partnerships Manager to enable this feature  
 </aside>
  
- 
- ### Request
+### Request
  
  
  Method | URL |
 ------ | ---|
-POST   | v1/customer/enrol | 
+POST   | v1/customer/enrol/public-liability/ | 
 
  <table>
     <thead>
@@ -264,12 +274,6 @@ POST   | v1/customer/enrol |
         <tr>
             <td></td>
             <td></td>
-            <td>code</td>
-            <td>String</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
             <td>occupations</td>
             <td>JSON(List) \["occupation_1", "occupation_2"\] (optional)</td>
         </tr>
@@ -280,7 +284,7 @@ POST   | v1/customer/enrol |
 
 Status | Response |
 ------ | ---------|
-202 | ``` { "customerNumber": "SE33S", "occupations": ["childminder"],"workProviderUserId": "212312qd2131", "status": "Created", "coverLevel": "Public Liability" }```
+202 | ``` { "customerNumber": "SE33S", "workProviderUserId": "212312qd2131", "status": "ENROLLED", "detail": "Customer has been enrolled on <PUBLIC_LIABILITY_PRODUCT>}```
 401 | ```{ "error":"MISSING_AUTH", "detail": "Authorization header missing" }```
 401 | ```{ "error":"INVALID_KEY", "detail": "Authorization key is invalid" }```
 400 | ```{ "error":"INVALID_DATA", "detail": "JSON decode error at line 1, column 2" }```
