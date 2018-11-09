@@ -3,21 +3,29 @@
 ### Customer sign up integration
 We support a webhook integration flow to link Zego customers to their work provider. 
 Once a user has successfully registered through our app, we will issue the following POST 
-request to a url configurable by the work provider:
+request to a url configurable by the work provider.
 
-<aside class="notice">
-You should respond to the webhook by making a call to the <code>/v1/user/match</code> 
-endpoint, with the <code>success</code> variable set to <code>true</code> if the customer number 
-could be matched to a user in your system, and <code>success</code> set to <code>false</code> 
-if no match could be made.
-</aside>
+You should use the `email` and `phoneNumber` to try and match the user that has signed up to a
+user in your system. If there is a match, you may respond in one of the following ways:
+
+- with a 2xx response indicating you have successfully found a match. You should then record
+  the `customerNumber`, and use the customerNumber when logging shifts.
+
+- with a 2xx response and the body 
+    ```
+    {
+      "workProviderUserId": <YOUR_ID_FOR_THE_USER>
+    }
+    ```
+  We will store this reference against the user in our system. You should use this `workProviderUserId` when
+  logging shifts against the user.
 
 
 ```
 {
-	"customer_number": <CUSTOMER_NUMBER>,
+	"customerNumber": <CUSTOMER_NUMBER>,
 	"email": <USER_EMAIL>,
-	"phone_number": <USER_PHONE_NUMBER>,
+	"phoneNumber": <USER_PHONE_NUMBER>,
 }
 ```
 
@@ -43,7 +51,7 @@ if no match could be made.
         <tr>
             <td></td>
             <td></td>
-            <td>customer_number</td>
+            <td>customerNumber</td>
             <td>String</td>
         </tr>
         <tr>
@@ -55,7 +63,7 @@ if no match could be made.
         <tr>
             <td></td>
             <td></td>
-            <td>phone_number</td>
+            <td>phoneNumber</td>
             <td>String (optional)</td>
         </tr>
     </tbody>
