@@ -8,10 +8,10 @@ request to a url configurable by the work provider.
 You should use the `email` and `phoneNumber` to try and match the user that has signed up to a
 user in your system. If there is a match, you may respond in one of the following ways:
 
-- with a 2xx response indicating you have successfully found a match. You should then record
+- with a 204 response indicating you have successfully found a match. You should then record
   the `customerNumber`, and use the customerNumber when logging shifts.
 
-- with a 2xx response and the body 
+- with a 200 response and the body 
     ```
     {
       "workProviderUserId": <YOUR_ID_FOR_THE_USER>
@@ -19,6 +19,9 @@ user in your system. If there is a match, you may respond in one of the followin
     ```
   We will store this reference against the user in our system. You should use this `workProviderUserId` when
   logging shifts against the user.
+
+If you don't have a match, you should respond with a 404 response. This will allow us to feed back to the user
+that we failed to find a match in your system.
 
 
 ```
