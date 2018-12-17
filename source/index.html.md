@@ -10,6 +10,8 @@ toc_footers:
 includes:
   - shifts
   - customers
+  - policies
+  - occupations
   - workflows
   - webhooks
   - versions
