@@ -14,3 +14,4 @@ Version | Date | Author | Description
 1.9 | 13-Aug-2018 | Cedric Cordenier | Deprecate ``policyId`` and ``driverId`` fields. These are replaced by ``customerNumber`` and ``workProviderUserId`` respectively.
 1.10 | 13-Aug-2018 | Cedric Cordenier | Add information on webhook integration with Zego.
 1.11 | 30-Sep-2018 | Daniel Inniss  | Reorganise documentation into smaller sections. Add ``/customer/enrol``
+1.12 | 17-Dec-2018 | Cedric Cordenier  | Add ``customer/register``, ``v2/policy``, and ``v2/public-liability-occupations``

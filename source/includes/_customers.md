@@ -288,3 +288,117 @@ Status | Response |
 401 | ```{ "error":"MISSING_AUTH", "detail": "Authorization header missing" }```
 401 | ```{ "error":"INVALID_KEY", "detail": "Authorization key is invalid" }```
 400 | ```{ "error":"INVALID_DATA", "detail": "JSON decode error at line 1, column 2" }```
+
+## customer/register/
+
+Creates a user in our system, and registers that user as working for the owner of the API key that made the request.
+
+> The request body should contain JSON data in the following format
+
+```json
+{
+"customer": {
+    "address": "25 Luke Street",
+    "city": "London",
+    "dob": "2000-04-15",
+    "email": "raekwon@wutangforever.wu",
+    "givenNames": "Reakwon The",
+    "lastName": "Chef",
+    "phoneNumber": "+4412314323423",
+    "postCode": "EC2A 4DS",
+    "workProviderUserId": "596e34ee2346c78cc8cf7c4"},
+}
+```
+
+### Request
+ 
+ 
+ Method | URL |
+------ | ---|
+POST   | /v1/customer/register/ | 
+
+ <table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th colspan="2">Params</th>
+            <th>Values</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>HEAD</td>
+            <td colspan="2">Authorization</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td colspan="2">customer</td>
+            <td>JSON (Object)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>givenNames</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>lastName</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>dob</td>
+            <td>String (ISO-8601)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>address</td>
+            <td>String (first line only)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>city</td>
+            <td>String</td>
+        </tr>
+         <tr>
+            <td></td>
+            <td></td>
+            <td>postCode</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>email</td>
+            <td>String</td>
+        </tr>
+         <tr>
+            <td></td>
+            <td></td>
+            <td>phoneNumber</td>
+            <td>String (including dialing country)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>workProviderUserId</td>
+            <td>String</td>
+        </tr>
+    </tbody>
+</table>
+
+### Response
+
+Status | Response |
+------ | ---------|
+200 | ``` { "customerNumber": "SE33S", "workProviderUserId": "212312qd2131", "status": "CUSTOMER_CREATED", "message": "Customer has been created"}```
+401 | ```{ "error":"MISSING_AUTH", "detail": "Authorization header missing" }```
+401 | ```{ "error":"INVALID_KEY", "detail": "Authorization key is invalid" }```
+400 | ```{ "error":"INVALID_DATA", "detail": "JSON decode error at line 1, column 2" }```
+
