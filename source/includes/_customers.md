@@ -315,7 +315,7 @@ Creates a user in our system, and registers that user as working for the owner o
  
  Method | URL |
 ------ | ---|
-POST   | /v1/customer/register/ | 
+POST   | /v2/customer/register/ | 
 
  <table>
     <thead>
