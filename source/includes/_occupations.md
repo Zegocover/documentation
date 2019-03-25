@@ -11,7 +11,7 @@ When creating fixed term policies via the /v2/policy/ endpoint, you can use the 
  
  Method | URL |
 ------ | ---|
-GET   | /v2/public-liability-occupation/ | 
+GET   | /v2/public-liability-occupations/ | 
 
 </table>
 

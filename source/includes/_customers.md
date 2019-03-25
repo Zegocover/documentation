@@ -153,7 +153,7 @@ Create and Enrol a customer on a Public Liability product
 import requests
 
 response = requests.post(
-    'https://api.zego.com/v1/customer/enrol/public-liability/',
+    'https://api.zego.com/v2/customer/enrol/public-liability/',
     headers={'Authorization': AUTHORIZATION_CODE},
     json={
         'customer': {...},
@@ -191,7 +191,7 @@ for API Customer creation. Please contact your Zego Partnerships Manager to enab
  
  Method | URL |
 ------ | ---|
-POST   | v1/customer/enrol/public-liability/ | 
+POST   | v2/customer/enrol/public-liability/ | 
 
  <table>
     <thead>
