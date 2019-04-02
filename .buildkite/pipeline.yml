@@ -1,9 +1,9 @@
 steps:
-  - label: ':docker: Build Container'
-    command: 'scripts/build-container.sh'
+  - label: ":docker: Build Container"
+    command: "build-container.sh"
     
   - wait
   
-  - label: ':buildkite: :s3: Deploy to S3'
+  - label: ":buildkite: :s3: Deploy to S3"
     command: "make deploy"  
     branches: "master"
