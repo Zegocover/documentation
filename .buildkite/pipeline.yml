@@ -4,7 +4,8 @@ steps:
     plugins:
       - docker#v3.0.1:
           image: "docker:latest"
-    
+           volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"   
   - wait
   
   - label: ":buildkite: :s3: Deploy to S3"
