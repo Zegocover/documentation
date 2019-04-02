@@ -1,6 +1,9 @@
 steps:
   - label: ":docker: Build Container"
-    command: "./build-container.sh"
+    command: "docker build . -t zego-documentation"
+    plugins:
+      - docker#v3.0.1:
+          image: "docker:latest"
     
   - wait
   
