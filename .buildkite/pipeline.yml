@@ -1,6 +1,6 @@
 steps:
   - label: ":docker: Build Container"
-    command: "build-container.sh"
+    command: "./build-container.sh"
     
   - wait
   
