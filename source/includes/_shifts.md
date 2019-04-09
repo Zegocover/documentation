@@ -522,3 +522,79 @@ Status | Response |
 401 | ```{ "error":"MISSING_AUTH", "detail": "Authorization header missing" }```
 401 | ```{ "error":"INVALID_KEY", "detail": "Authorization key is invalid" }```
 400 | ```{ "error":"INVALID_DATA", "detail": "JSON decode error at line 1, column 2" }```
+
+## /v2/shift/
+
+Creates a shift for the user with a matching customer number or work provider user id.
+
+
+> The request body should contain JSON data in the following format
+
+```json
+{
+  "user": {
+    "customerNumber": "IT15K",
+  },
+  "startTime": "2018-12-15T14:00:00+00:00",
+  "endTime": null
+}
+```
+
+### Request
+ 
+ 
+ Method | URL |
+------ | ---|
+POST   | /v2/policy/ | 
+
+ <table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th colspan="2">Params</th>
+            <th>Values</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>HEAD</td>
+            <td colspan="2">Authorization</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td colspan="2">user</td>
+            <td>JSON (Object)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>customerNumber</td>
+            <td>String; Not required if `workProviderUserId` is sent.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>workProviderUserId</td>
+            <td>String; Not required if `customerNumber` is sent.</td>
+        </tr>
+         <tr>
+            <td></td>
+            <td colspan="2">startTime</td>
+            <td>String (ISO-8601 formatted date)</td>
+        </tr>
+         <tr>
+            <td></td>
+            <td colspan="2">endTime</td>
+            <td>Optional string (ISO-8601 formatted date).</br>Must be `null` if not being set.</td>
+        </tr>
+    </tbody>
+</table>
+
+### Response
+
+Status | Response |
+------ | ---------|
+201 | ``` { "id": "1", "user": {"customerNumber": "IT15K"}, "startTime": "2018-12-14T14:00:00+00:00", "endTime": null} ```
+400 | ```{ "status": "NOK", "error":"INVALID_DATA", "message": "Invalid data format", "detail":  { "startTime ": "`startTime` must be within 30 minutes from now."} }```
+401 | ```{ "status": "NOK", "error":"INVALID_KEY", "detail": "Invalid API key" }```
