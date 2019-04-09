@@ -526,7 +526,7 @@ Status | Response |
 ## /v2/shift/
 
 Creates a shift for the user with a matching customer number or work provider user id.
-
+The created shift will either be open if `endTime` is `null` or finished if an `endTime` is provided.
 
 > The request body should contain JSON data in the following format
 
@@ -597,4 +597,53 @@ Status | Response |
 ------ | ---------|
 201 | ``` { "id": "1", "user": {"customerNumber": "IT15K"}, "startTime": "2018-12-14T14:00:00+00:00", "endTime": null} ```
 400 | ```{ "status": "NOK", "error":"INVALID_DATA", "message": "Invalid data format", "detail":  { "startTime ": "`startTime` must be within 30 minutes from now."} }```
+401 | ```{ "status": "NOK", "error":"INVALID_KEY", "detail": "Invalid API key" }```
+
+## /v2/shift/\<id\>
+
+Updates a created shift with an end time.
+
+> The request body should contain JSON data in the following format
+
+```json
+{
+  "endTime": "2018-12-15T14:00:00+00:00",
+}
+```
+
+### Request
+ 
+ 
+ Method | URL |
+------ | ---|
+PUT   | /v2/policy/\<id\> | 
+
+ <table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th colspan="2">Params</th>
+            <th>Values</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>HEAD</td>
+            <td colspan="2">Authorization</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>PUT</td>
+            <td colspan="2">endTime</td>
+            <td>string (ISO-8601 formatted date).</td>
+        </tr>
+    </tbody>
+</table>
+
+### Response
+
+Status | Response |
+------ | ---------|
+201 | ``` {"endTime": "2018-12-14T14:00:00+00:00"} ```
+400 | ```{ "status": "NOK", "error":"INVALID_DATA", "message": "Invalid data format", "detail":  { "endTime ": "The maximum allowable shifts length is 14:00:00."} }```
 401 | ```{ "status": "NOK", "error":"INVALID_KEY", "detail": "Invalid API key" }```
